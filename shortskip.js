@@ -1,3 +1,5 @@
+const channelPaths = ["/@", "/c/", "/channel/", "/user/"];
+
 function redirectToNormalFormat() {
     let ogurl = window.location.href.toString();
     let newurl = ogurl.replace("/shorts/", "/watch?v=");
@@ -5,11 +7,15 @@ function redirectToNormalFormat() {
 }
 
 document.addEventListener("yt-navigate-start", function(event) {
-    if (window.location.href.indexOf("shorts") > -1) {
-        redirectToNormalFormat();
+    if (window.location.href.includes("shorts")) {
+        if (channelPaths.every(path => !window.location.href.includes(path))) {
+            redirectToNormalFormat();
+        }
     }
 });
 
-if (window.location.href.indexOf("shorts") > -1) {
-    redirectToNormalFormat();
+if (window.location.href.includes("shorts")) {
+    if (channelPaths.every(path => !window.location.href.includes(path))) {
+        redirectToNormalFormat();
+    }
 }
